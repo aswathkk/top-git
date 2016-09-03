@@ -1,0 +1,38 @@
+.logo {
+	padding: 0px 15px;
+}
+.logo i{
+	width: 55px;
+	height: 55px;
+	padding: 4px 7px;
+	margin: 10px;
+	border: rgba(255, 255, 255, .6) 4px solid;
+	border-radius: 50%;
+}
+.logo small {
+	font-size: 18px;
+	position: relative;
+	bottom: 7px;
+	left: 5px;
+}
+.side {
+	width: 30%;
+	float: left;
+}
+.main {
+	padding: 15px;
+}
+.star-input {
+	position: relative;
+	width: 50px;
+}
+md-autocomplete.search {
+	width: 100%;
+	background: rgba(255,255,255,1);
+}
+md-autocomplete.search .md-whiteframe-1dp, .md-whiteframe-z1  {
+	box-shadow: none;
+}
+md-toolbar:not(.md-menu-toolbar).md-accent.my-white {
+	background: #fff;
+}

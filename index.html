@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	  <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
+     
+      <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body ng-app="TopGit" ng-controller="MainCtrl">
+        <md-toolbar class="md-tall md-hue-2" layout="row">
+            <h1 class="logo"><i class="fa fa-github"></i>TopGit<small> - finding the best github projects!</small></h1>
+        </md-toolbar>
+        <section>
+            <div class="side" md-whiteframe-2dp>
+                <md-toolbar class="md-primary">
+                    <h2 class="md-toolbar-tools">Filter</h2>
+                </md-toolbar>
+                <md-list>
+                    <md-subheader><i class="fa fa-star-o"></i> Stars ({{stars}})</md-subheader>
+                    <md-list-item>
+                        <md-slider-container>
+                            <span>0</span>
+                            <md-slider md-discrete aria-label="stars" class="md-default" flex ng-model="stars" min="0" max="1000"></md-slider>
+                            <span>1000</span>
+                        </md-slider-container>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-subheader><i class="fa fa-github-alt"></i> Access info</md-subheader>
+                    <md-list-item>
+                        <p>Rate limit : {{ limit || 'Not available' }}</p>
+                    </md-list-item>
+                    <md-list-item>
+                        <p>Rate limit Remaining : {{ remaining || 'Not available' }}</p>
+                    </md-list-item>
+                    <md-list-item>
+                       <p>Reset at : {{ ( resetAt | date: 'medium' ) || 'Not available' }}</p>
+                   {{headers}}
+                    </md-list-item>
+                </md-list>
+            </div>
+            <md-content>
+                <md-toolbar ng-controller="SearchCtrl as ctrl" class="md-accent my-white">
+                    <div class="md-toolbar-tools">
+                        <md-autocomplete
+                            class="search"
+                            md-selected-item="ctrl.selectedItem"
+                            md-search-text="ctrl.searchText"
+                            md-items="item in ctrl.languages | filter:{$: ctrl.searchText}"
+                            md-item-text="item.display"
+                            md-selected-item-change="selected(item)"
+                            md-min-length="0"
+                            placeholder="Search ( by language )">
+                        <md-item-template>
+                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No language matching "{{ctrl.searchText}}" were found.
+                        </md-not-found>
+                        </md-autocomplete>
+                    </div>
+                </md-toolbar>
+                <md-content class="main" layout="column">
+                    <md-list flex>
+                        <div ng-show="loading" layout="row" layout-sm="column" layout-align="space-around">
+                            <md-progress-circular class="md-accent" md-diameter="30"></md-progress-circular>
+                        </div>
+                        <md-list-item class="md-3-line" ng-repeat="repo in repos" ng-click="openRepo()">
+                            <img ng-src="{{repo.owner.avatar_url}}" class="md-avatar" alt="{{item.who}}" />
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{ repo.full_name }}</h3>
+                                <h4>{{ repo.language }}</h4>
+                                <p>{{ repo.description }}</p>
+                            </div>
+                            <md-divider md-inset ng-if="!$last"></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-content>
+        </section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.js"></script>
+        
+        <script src="js/app.js"></script>
+    
+    </body>
+</html>
